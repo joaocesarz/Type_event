@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Evento(models.Model):
     criador = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
     nome = models.CharField(max_length=200)
@@ -20,3 +21,9 @@ class Evento(models.Model):
 
     def __str__(self) -> str:
         return self.nome
+    
+
+class Certificado(models.Model):
+    certificado = models.ImageField(upload_to="certificados")
+    participante = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    evento = models.ForeignKey(Evento, on_delete=models.DO_NOTHING)
