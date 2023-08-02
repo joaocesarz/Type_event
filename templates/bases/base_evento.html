@@ -33,11 +33,18 @@
                         Cliente
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="">Meus eventos</a></li>
+							<li><a class="dropdown-item" href="{% url 'gerenciar_evento' %}">Meus eventos</a></li>
                         <li><a class="dropdown-item" href="{% url 'meus_certificados' %}">Meus certificados</a></li>
                     </ul>
                 </li>
+				
+				<li class="nav-item dropdown">
+					<a href="{% url 'logout' %}"><button class="btn btn-danger">Logout</button></a></a>
+				</li>
             </ul>
+
+
+
             </div>
         </div>
     </nav>

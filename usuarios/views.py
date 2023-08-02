@@ -7,30 +7,36 @@ from django.urls import reverse
 from django.contrib import auth
 
 def cadastro(request):
-    if request.method == "GET":
-        return render(request, 'cadastro.html')
-    elif request.method == "POST":
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        senha = request.POST.get('senha')
-        confirmar_senha = request.POST.get('confirmar_senha')
+    match request.method:
 
-        if not senha == confirmar_senha:
-            messages.add_message(request, constants.ERROR, 'Senhas não coincidem.')
-            return redirect(reverse('cadastro')) 
+        case "GET":
+            return render(request, 'cadastro.html')
         
-        # TODO: validar força da senha
+        case "POST":
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            senha = request.POST.get('senha')
+            confirmar_senha = request.POST.get('confirmar_senha')
 
-        user = User.objects.filter(username=username)
+            if not senha == confirmar_senha:
+                messages.add_message(request, constants.ERROR, 'Senhas não coincidem.')
+                return redirect(reverse('cadastro'))
+            
+            # TODO: validar força da senha
+            if not len(senha) >= 7:
+                messages.add_message(request, constants.ERROR, 'Senha muito curta')
+                return redirect(reverse('cadastro'))
 
-        if user.exists():
-            messages.add_message(request, constants.ERROR, 'Usuário já existe.')
-            return redirect(reverse('cadastro'))
-        
-        user = User.objects.create_user(username=username, email=email, password=senha)
-        messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso.')
-        
-        return redirect(reverse('login'))
+            user = User.objects.filter(username=username)
+
+            if user.exists():
+                messages.add_message(request, constants.ERROR, 'Usuário já existe.')
+                return redirect(reverse('cadastro'))
+            
+            user = User.objects.create_user(username=username, email=email, password=senha)
+            messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso.')
+            
+            return redirect(reverse('login'))
     
 
 def login(request):
@@ -48,3 +54,10 @@ def login(request):
         
         auth.login(request, user)
         return redirect('/eventos/novo_evento/')
+
+
+def logout(request: HttpResponse):
+    auth.logout(request)
+
+    return redirect('login')
+    
