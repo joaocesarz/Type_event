@@ -19,7 +19,6 @@ def cadastro(request):
             email = request.POST.get('email')
             senha = request.POST.get('senha')
             confirmar_senha = request.POST.get('confirmar_senha')
-<<<<<<< HEAD
 
             if not senha == confirmar_senha:
                 messages.add_message(
@@ -68,58 +67,11 @@ def cadastro(request):
     
 
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
-
-    elif request.method == 'POST':
-        username = request.POST.get('username')
-        senha = request.POST.get('senha')
-
-        user = auth.authenticate(username=username, password=senha)
-
-        if not user:
-            messages.add_message(
-                    request, 
-                    constants.ERROR, 
-                    'Username ou senha inválidos.'
-            )
-            return redirect(reverse('login'))
-        
-        auth.login(request, user)
-        return redirect('/eventos/novo_evento/')
-
-
-def logout(request: HttpResponse):
-    auth.logout(request)
-
-    return redirect('login')
-    
-=======
-               
-            if not senha == confirmar_senha:
-            messages.add_message(request, constants.ERROR, 'Senhas não coincidem.')
-            return redirect(reverse('cadastro')) 
-
-            # TODO: validar força da senha
-
-            user = User.objects.filter(username=username)
-
-            if user.exists():
-                messages.add_message(request, constants.ERROR, 'Usuário já existe.')
-                return redirect(reverse('cadastro'))
-            
-
-            user = User.objects.create_user(username=username, email=email, password=senha)
-            messages.add_message(request, constants.SUCCESS, 'Usuário cadastrado com sucesso.')
-        
-            return redirect(reverse('login'))
-
-def login(request):
     match request.method:
-        
+    
         case 'GET':
             return render(request, 'login.html')
-        
+
         case 'POST':
             username = request.POST.get('username')
             senha = request.POST.get('senha')
@@ -127,9 +79,19 @@ def login(request):
             user = auth.authenticate(username=username, password=senha)
 
             if not user:
-                messages.add_message(request, constants.ERROR, 'Username ou senha inválidos.')
+                messages.add_message(
+                        request, 
+                        constants.ERROR, 
+                        'Username ou senha inválidos.'
+                )
                 return redirect(reverse('login'))
         
             auth.login(request, user)
             return redirect('/eventos/novo_evento/')
->>>>>>> atualizacao
+
+
+def logout(request: HttpResponse):
+    auth.logout(request)
+
+    return redirect('login')
+
