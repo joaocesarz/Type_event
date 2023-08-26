@@ -179,3 +179,8 @@ def procurar_certificado(request, id):
         return redirect(reverse('certificados_evento', kwargs={'id': evento.id}))
     
     return redirect(certificado.certificado.url)
+
+
+def excluir_evento(request, id):
+    pass
+

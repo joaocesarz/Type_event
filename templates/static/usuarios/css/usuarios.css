@@ -54,3 +54,7 @@
 	position 80px;
 	bottom 20px;
 }
+
+.dropdown-right{
+	margin-left: right
+}

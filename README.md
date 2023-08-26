@@ -26,7 +26,7 @@ Para instalar o TypeEvent, siga estas etapas:
 Projeto finalizado
 
 - [x] Validar segurança da senha no cadastro
-- [ ] Validar se o user já está inscrito no evento
+- [x] Validar se o user já está inscrito no evento
 - [ ] Fazer página de "Meus Eventos"
 - [x] Fazer logout
 
