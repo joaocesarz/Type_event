@@ -13,7 +13,7 @@ def cadastro(request):
 
         case "GET":
             return render(request, 'cadastro.html')
-        
+       
         case "POST":
             username = request.POST.get('username')
             email = request.POST.get('email')
@@ -27,7 +27,7 @@ def cadastro(request):
                         'Senhas não coincidem.'
                 )
                 return redirect(reverse('cadastro'))
-            
+           
             # TODO: validar email
             if not Utils.validate_email(email):
                 messages.add_message(
